@@ -39,6 +39,13 @@ dependencies {
 
     // security
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("com.auth0:java-jwt:4.4.0")
+
+    // logging
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
+
+    // swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
