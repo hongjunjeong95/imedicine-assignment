@@ -49,6 +49,13 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.ninja-squad:springmockk:3.1.1")
+
+    // kotest
+    testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
+    testImplementation("io.kotest:kotest-assertions-core:5.7.2")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3") // spring boot test 를 위해서 추가
+//    testImplementation("io.mockk:mockk:1.12.8") // unit test 에서 mockking 사용
 }
 
 tasks.withType<KotlinCompile> {

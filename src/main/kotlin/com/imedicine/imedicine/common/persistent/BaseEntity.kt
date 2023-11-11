@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class BaseEntity(
+open class BaseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
@@ -23,4 +23,4 @@ abstract class BaseEntity(
 
     @Column(name = "deleted_at", nullable = true)
     var deletedAt: LocalDateTime? = null
-    )
+)
