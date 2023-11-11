@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS member (
     KEY `FKgox76pyv0kmrobtr95xyngamo` (user_id),
     CONSTRAINT `FK9mgjw7mdocnytoi2a45jo4vgc` FOREIGN KEY (team_id) REFERENCES team (`id`),
     CONSTRAINT `FKgox76pyv0kmrobtr95xyngamo` FOREIGN KEY (user_id) REFERENCES user (`id`),
-    UNIQUE KEY `product_product_group_uk` (team_id,user_id)
+    UNIQUE KEY `member_uk` (team_id,user_id)
 );

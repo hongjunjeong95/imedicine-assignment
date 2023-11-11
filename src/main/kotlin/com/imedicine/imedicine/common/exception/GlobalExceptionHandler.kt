@@ -49,7 +49,7 @@ class GlobalExceptionHandler {
     fun handleDBUKException(ex: DataIntegrityViolationException): ResponseEntity<ErrorResponse> {
         logger.error { ex.message }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(code = 400, message = "중복 데이터 허용 불가"))
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(code = 400, message = ex.message ?: "중복 데이터 허용 불가"))
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)

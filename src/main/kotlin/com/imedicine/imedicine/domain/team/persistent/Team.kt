@@ -1,7 +1,7 @@
 package com.imedicine.imedicine.domain.team.persistent
 
 import com.imedicine.imedicine.common.persistent.BaseEntity
-import com.imedicine.imedicine.domain.member.persistent.Memeber
+import com.imedicine.imedicine.domain.member.persistent.Member
 import com.imedicine.imedicine.domain.user.persistent.User
 import jakarta.persistence.*
 
@@ -18,5 +18,5 @@ data class Team(
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
-    var members:  MutableList<Memeber> = mutableListOf()
+    var members:  MutableList<Member> = mutableListOf()
 ): BaseEntity()
