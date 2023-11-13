@@ -4,5 +4,5 @@ import org.springframework.security.access.prepost.PreAuthorize
 
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-@PreAuthorize("hasPermission(#teamId,'team','read')")
+@PreAuthorize("hasPermission(#body.teamId,'team','read')")
 annotation class LeaderAuthorize
