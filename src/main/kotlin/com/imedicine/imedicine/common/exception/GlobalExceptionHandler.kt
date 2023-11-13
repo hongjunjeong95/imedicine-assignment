@@ -3,7 +3,7 @@ package com.imedicine.imedicine.common.exception
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.exceptions.SignatureVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
-import jakarta.validation.ConstraintViolationException
+import org.springframework.security.access.AccessDeniedException
 import mu.KotlinLogging
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
@@ -45,6 +45,13 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(code = 401, message = "Token Expired Error"))
     }
 
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(ex: AccessDeniedException): ResponseEntity<ErrorResponse> {
+        logger.error { ex.message }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ErrorResponse(code = 403, message = ex.message ?: "Forbidden"))
+    }
+
     @ExceptionHandler(DataIntegrityViolationException::class)
     fun handleDBUKException(ex: DataIntegrityViolationException): ResponseEntity<ErrorResponse> {
         logger.error { ex.message }
@@ -60,15 +67,6 @@ class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(ErrorResponse(code = 400, message = errors))
     }
-
-    @ExceptionHandler(ConstraintViolationException::class)
-    fun handleInvalidRequestException(ex: ConstraintViolationException): ResponseEntity<ErrorResponse> {
-        logger.error { ex.message }
-        val errors = HashMap<String, String>()
-        ex.constraintViolations.forEach { errors[it.propertyPath.last().name] = it.message }
-        return ResponseEntity.badRequest().body(ErrorResponse(code = 400, message = errors))
-    }
-
 
     @ExceptionHandler(Exception::class)
     fun handleException(ex: Exception): ResponseEntity<ErrorResponse> {

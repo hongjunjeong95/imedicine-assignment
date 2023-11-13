@@ -6,6 +6,7 @@ import com.imedicine.imedicine.domain.team.api.dto.CreateTeamBody
 import com.imedicine.imedicine.security.AuthUser
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -20,10 +21,12 @@ class TeamController(private val teamFacade: TeamFacade) {
         ApiResponse.success(teamFacade.create(user, body))
 
     @Operation(summary = "팀원을 팀에 추가")
-    @PutMapping("/{id}/add")
+    @PutMapping("/{teamId}/add")
+    @PreAuthorize("hasPermission(#teamId,'team','read')")
     fun addMemberToTeam(
-        @PathVariable id: Long,
+        @PathVariable teamId: Long,
+        @AuthenticationPrincipal user: AuthUser,
         @RequestBody body: AddMemberToTeamBody
     ): ApiResponse<Unit> =
-        ApiResponse.success(teamFacade.addMemberToTeam(id, body))
+        ApiResponse.success(teamFacade.addMemberToTeam(teamId, body))
 }

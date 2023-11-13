@@ -10,11 +10,11 @@ import jakarta.persistence.*
 @Table(name = "team")
 data class Team(
     @Column(name = "\"name\"")
-    private var name: String,
+    var name: String,
 
     @ManyToOne
     @JoinColumn(name = "leader_id")
-    private val leader: User,
+    val leader: User,
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
