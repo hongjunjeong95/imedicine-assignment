@@ -2,8 +2,7 @@ package com.imedicine.imedicine.domain.member.api
 
 import com.imedicine.imedicine.domain.member.persistent.Member
 import com.imedicine.imedicine.domain.member.service.MemberService
-import com.imedicine.imedicine.common.dto.UserIdBody
-import com.imedicine.imedicine.domain.team.api.dto.CreateTeamBody
+import com.imedicine.imedicine.domain.team.api.dto.TeamDto
 import com.imedicine.imedicine.domain.team.persistent.Team
 import com.imedicine.imedicine.domain.team.service.TeamService
 import com.imedicine.imedicine.domain.user.service.UserService
@@ -18,7 +17,7 @@ class MemberFacade(
     private val userService: UserService,
     private val memberService:MemberService
 ) {
-    fun create(user:AuthUser, body: CreateTeamBody) {
+    fun create(user:AuthUser, body: TeamDto) {
         val leader = userService.me(user.id)
         teamService.create(
             with(body){

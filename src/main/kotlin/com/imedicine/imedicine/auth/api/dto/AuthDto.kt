@@ -3,7 +3,6 @@ package com.imedicine.imedicine.auth.api.dto
 import com.imedicine.imedicine.domain.user.persistent.UserRole
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Size
 
 data class SignUpBody(
