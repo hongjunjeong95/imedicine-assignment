@@ -12,4 +12,8 @@ class MemberService(
     @Transactional
     fun create(param: Member) =
         memberRepository.save(param)
+
+    @Transactional
+    fun delete(teamId: Long, userId: Long) =
+        memberRepository.deleteByTeamIdAndUserId(teamId, userId)
 }
