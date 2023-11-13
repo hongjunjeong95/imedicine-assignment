@@ -9,12 +9,11 @@ import com.imedicine.imedicine.common.exception.PasswordNotMatchException
 import com.imedicine.imedicine.common.exception.PasswordNotMatchedException
 import com.imedicine.imedicine.common.exception.UserExistsException
 import com.imedicine.imedicine.common.exception.UserNotFoundException
-import com.imedicine.imedicine.common.utils.BCryptUtils
-import com.imedicine.imedicine.domain.user.persistent.User
 import com.imedicine.imedicine.domain.user.persistent.UserRepository
 import com.imedicine.imedicine.domain.user.persistent.UserRole
 import com.imedicine.imedicine.security.JWTClaim
 import com.imedicine.imedicine.security.TokenProvider
+import com.imedicine.imedicine.stub.userStub
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -26,13 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 class AuthServiceTest: BehaviorSpec() {
-    private val userStub: User by lazy {
-        User(
-            email = "hongjun@gmail.com",
-            username = "hongjun@gmail.com",
-            password = BCryptUtils.encrypt("12345678"),
-        )
-    }
+    private val mockUser = userStub()
 
     init {
         val userRepository = mockk<UserRepository>()
@@ -51,7 +44,7 @@ class AuthServiceTest: BehaviorSpec() {
                 confirmPassword = "12345678",
                 role = UserRole.USER
             )
-            every { userRepository.findByEmail(param.email) } returns userStub
+            every { userRepository.findByEmail(param.email) } returns mockUser
             When("you sign up") {
                 Then("throws an UserExistsException exception"){
                     shouldThrow<UserExistsException> {
@@ -98,7 +91,7 @@ class AuthServiceTest: BehaviorSpec() {
                 email = "hongjun@gmail.com",
                 password = "wrong password",
             )
-            every { userRepository.findByEmail(param.email) } returns userStub
+            every { userRepository.findByEmail(param.email) } returns mockUser
             When("you sign in") {
                 Then("throws an PasswordNotMatchedException"){
                     shouldThrow<PasswordNotMatchedException> {
@@ -114,14 +107,14 @@ class AuthServiceTest: BehaviorSpec() {
                 password = "12345678",
             )
             val jwtClaim = JWTClaim(
-                userId = userStub.id,
-                email =  userStub.email,
-                username =  userStub.username,
-                role = userStub.role
+                userId = mockUser.id,
+                email =  mockUser.email,
+                username =  mockUser.username,
+                role = mockUser.role
             )
 
-            every { userRepository.findByEmail(param.email) } returns userStub
-            every { userRepository.save(userStub) } returns userStub
+            every { userRepository.findByEmail(param.email) } returns mockUser
+            every { userRepository.save(mockUser) } returns mockUser
             every { tokenProvider.createAuthToken(jwtClaim) } returns "authTokenValue"
             every { tokenProvider.createRefreshToken(jwtClaim) } returns "refreshTokenValue"
             When("you sign in") {

@@ -2,10 +2,10 @@ package com.imedicine.imedicine.service
 
 
 import com.imedicine.imedicine.common.persistent.findByIdOrThrow
-import com.imedicine.imedicine.common.utils.BCryptUtils
 import com.imedicine.imedicine.domain.user.persistent.User
 import com.imedicine.imedicine.domain.user.persistent.UserRepository
 import com.imedicine.imedicine.domain.user.service.UserService
+import com.imedicine.imedicine.stub.userStub
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -17,13 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 class UserServiceTest: BehaviorSpec() {
-    private val userStub: User by lazy {
-        User(
-            email = "hongjun@gmail.com",
-            username = "hongjun@gmail.com",
-            password = BCryptUtils.encrypt("12345678"),
-        )
-    }
+    private val mockUser = userStub()
 
     init {
         val userRepository = mockk<UserRepository>()
@@ -47,12 +41,12 @@ class UserServiceTest: BehaviorSpec() {
 
         Given("id with user"){
             val id:Long = 1
-            every { userRepository.findByIdOrThrow(id, "존재하지 않는 회원입니다.") } returns userStub
+            every { userRepository.findByIdOrThrow(id, "존재하지 않는 회원입니다.") } returns mockUser
             When("you find yourself(me)") {
                 val result: User = service.me(id)
 
                 Then("it returns SignInReturn"){
-                    result shouldBe userStub
+                    result shouldBe mockUser
                 }
             }
         }
