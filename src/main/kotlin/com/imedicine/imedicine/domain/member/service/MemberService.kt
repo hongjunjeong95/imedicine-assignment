@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class MemberService(
     private val memberRepository: MemberRepository
 ) {
-    @Transactional
     fun create(param: Member) =
         memberRepository.save(param)
 
-    @Transactional
     fun delete(teamId: Long, userId: Long) =
         memberRepository.deleteByTeamIdAndUserId(teamId, userId)
 }
