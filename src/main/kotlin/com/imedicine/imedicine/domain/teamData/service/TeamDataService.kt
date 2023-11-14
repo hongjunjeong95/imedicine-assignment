@@ -12,4 +12,10 @@ class TeamDataService(
 ) {
     fun create(param: TeamData) =
         teamDataRepository.save(param)
+
+    fun findByTeamId(teamId: Long) =
+        teamDataRepository.findByTeamId(teamId)
+
+    fun findByTeamIdAndUserId(teamId: Long, userId: Long) =
+        teamDataRepository.findByTeamIdAndUserId(teamId, userId)
 }

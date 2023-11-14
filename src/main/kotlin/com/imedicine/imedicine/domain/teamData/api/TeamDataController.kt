@@ -2,14 +2,13 @@ package com.imedicine.imedicine.domain.teamData.api
 
 import com.imedicine.imedicine.common.dto.ApiResponse
 import com.imedicine.imedicine.domain.teamData.api.dto.CreateTeamDataDto
+import com.imedicine.imedicine.domain.teamData.api.dto.TeamDataListResponse
 import com.imedicine.imedicine.security.AuthUser
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 @Tag(name = "Team Data")
@@ -20,4 +19,16 @@ class TeamDataController(private val teamDataFacade: TeamDataFacade) {
     @PostMapping
     fun create(@RequestBody body: CreateTeamDataDto, @AuthenticationPrincipal user: AuthUser): ApiResponse<Unit> =
         ApiResponse.success(teamDataFacade.create(user, body))
+
+    @Operation(summary = "팀 내 자신의 데이터 조회 혹은 팀장이 팀 내 모든 데이터 조회")
+    @GetMapping
+    fun findMany(
+        @AuthenticationPrincipal
+        user: AuthUser,
+
+        @RequestParam(required = true)
+        @Schema(description = "team id", example = "1")
+        teamId: Long,
+    ): ApiResponse<TeamDataListResponse> =
+        ApiResponse.success(TeamDataListResponse.of(teamDataFacade.findTeamDataList(user, teamId)))
 }

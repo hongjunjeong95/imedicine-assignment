@@ -27,4 +27,15 @@ class TeamDataFacade(
             )
         )
     }
+
+    fun findTeamDataList(user: AuthUser, teamId: Long):List<TeamData> {
+        val userId = user.id
+        val team = teamService.findByIdOrNull(teamId)
+
+        return if(team.leader.id == userId){
+            teamDataService.findByTeamId(teamId)
+        } else {
+            teamDataService.findByTeamIdAndUserId(teamId, userId)
+        }
+    }
 }
