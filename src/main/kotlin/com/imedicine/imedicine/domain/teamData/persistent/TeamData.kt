@@ -8,10 +8,12 @@ import com.imedicine.imedicine.common.persistent.BaseEntity
 import com.imedicine.imedicine.domain.team.persistent.Team
 import com.imedicine.imedicine.domain.user.persistent.User
 import jakarta.persistence.*
+import org.hibernate.annotations.Where
 import java.time.LocalDateTime
 
 @Entity
 @Table(name = "team_data")
+@Where(clause = "deleted_at is null")
 class TeamData(
     @Column(name = "memo")
     var memo: String,

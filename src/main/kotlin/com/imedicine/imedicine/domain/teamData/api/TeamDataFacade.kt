@@ -50,4 +50,6 @@ class TeamDataFacade(
             it.update(body.memo)
             teamDataService.save(it)
         } }
+
+    fun deleteTeamData(id: Long) = teamDataService.softDeleteById(id)
 }

@@ -17,4 +17,7 @@ open class CommonService<T: BaseEntity>(
          repository.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     open fun findAll():List<T> = repository.findAll()
+
+    open fun softDeleteById(id: Long) =
+        repository.softDeleteById(id)
 }

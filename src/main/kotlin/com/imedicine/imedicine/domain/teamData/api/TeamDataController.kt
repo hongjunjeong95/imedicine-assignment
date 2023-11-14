@@ -9,6 +9,8 @@ import com.imedicine.imedicine.security.AuthUser
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.noContent
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -56,4 +58,11 @@ class TeamDataController(private val teamDataFacade: TeamDataFacade) {
         @RequestBody body: UpdateTeamDataBodyDto
     ): ApiResponse<Unit> =
         ApiResponse.success(teamDataFacade.updateTeamData(teamDataId, body))
+
+
+    @DeleteMapping("/{teamDataId}")
+    fun delete(@PathVariable teamDataId: Long): ResponseEntity<Unit> {
+        teamDataFacade.deleteTeamData(teamDataId)
+        return noContent().build()
+    }
 }
