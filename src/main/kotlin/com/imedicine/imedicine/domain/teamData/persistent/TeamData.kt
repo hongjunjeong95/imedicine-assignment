@@ -18,13 +18,11 @@ class TeamData(
     @Column(name = "memo")
     var memo: String,
 
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     val team:Team,
 
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: User
 ): BaseEntity() {

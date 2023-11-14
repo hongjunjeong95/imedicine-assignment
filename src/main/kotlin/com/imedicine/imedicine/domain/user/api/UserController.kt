@@ -20,5 +20,5 @@ class UserController(private val userService: UserService) {
     @Operation(summary = "회원 정보 조회")
     @GetMapping("/me")
     fun me(@AuthenticationPrincipal user: AuthUser) =
-        ApiResponse.success(userService.me(user.id))
+        ApiResponse.success(UserResponse.of(userService.me(user.id)))
 }

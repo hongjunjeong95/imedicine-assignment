@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional
 class TeamDataService(
     private val teamDataRepository: TeamDataRepository
 ): CommonService<TeamData>(teamDataRepository) {
-    fun findByTeamId(teamId: Long) =
+    fun findByTeamId(teamId: Long): List<TeamData> =
         teamDataRepository.findByTeamId(teamId)
 
-    fun findByTeamIdAndUserId(teamId: Long, userId: Long) =
+    fun findByTeamIdAndUserId(teamId: Long, userId: Long): List<TeamData> =
         teamDataRepository.findByTeamIdAndUserId(teamId, userId)
 }

@@ -8,10 +8,12 @@ import com.imedicine.imedicine.domain.member.persistent.Member
 import com.imedicine.imedicine.domain.teamData.persistent.TeamData
 import com.imedicine.imedicine.domain.team.persistent.Team
 import jakarta.persistence.*
+import org.hibernate.annotations.Where
 
 
 @Entity
 @Table(name = "user")
+@Where(clause = "deleted_at is null")
 class User(
     @Column(name = "email")
     var email: String,
@@ -28,9 +30,9 @@ class User(
     @Enumerated(EnumType.STRING)
     val role: UserRole = UserRole.USER,
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id")
-    private val team: MutableList<Team>? = null,
+    val teams: MutableList<Team> = mutableListOf(),
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -38,7 +40,7 @@ class User(
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    var dataList:  MutableList<TeamData> = mutableListOf()
+    var dataList:  MutableList<TeamData> = mutableListOf(),
 ): BaseEntity() {
     override fun toString() = kotlinToString(properties = toStringProperties)
 

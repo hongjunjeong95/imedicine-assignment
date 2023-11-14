@@ -13,7 +13,7 @@ data class CreateTeamDataBodyDto(
 )
 
 data class TeamDataListResponse(
-    val items: List<TeamDataResponse> // Immutable
+    val items: List<TeamDataResponse>
 ) {
     fun get(index: Int): TeamDataResponse = items[index]
     companion object {

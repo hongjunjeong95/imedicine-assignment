@@ -8,16 +8,16 @@ import com.imedicine.imedicine.common.persistent.BaseEntity
 import com.imedicine.imedicine.domain.team.persistent.Team
 import com.imedicine.imedicine.domain.user.persistent.User
 import jakarta.persistence.*
+import org.hibernate.annotations.Where
 
 @Entity
 @Table(name = "member")
+@Where(clause = "deleted_at is null")
 class Member(
-    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "team_id")
     val team:Team,
 
-    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: User,
