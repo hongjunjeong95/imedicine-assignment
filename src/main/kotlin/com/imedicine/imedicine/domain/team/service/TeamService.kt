@@ -8,7 +8,4 @@ import org.springframework.stereotype.Service
 @Service
 class TeamService(
     private val teamRepository: TeamRepository
-): CommonService<Team>(teamRepository) {
-    fun create(param: Team) =
-        teamRepository.save(param)
-}
+): CommonService<Team>(teamRepository)

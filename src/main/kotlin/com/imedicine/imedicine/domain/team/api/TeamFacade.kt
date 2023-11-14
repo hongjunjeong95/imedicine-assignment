@@ -16,7 +16,7 @@ class TeamFacade(
 ) {
     fun create(user: AuthUser, body: CreateTeamDto) {
         val leader = userService.me(user.id)
-        teamService.create(
+        teamService.save(
             with(body) {
                 Team(
                     name = name,

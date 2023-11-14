@@ -4,7 +4,7 @@ import com.imedicine.imedicine.domain.teamData.persistent.TeamData
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
-data class CreateTeamDataDto(
+data class CreateTeamDataBodyDto(
     @Schema(description = "Memo", example = "연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀")
     val memo: String,
 
@@ -38,3 +38,8 @@ data class TeamDataResponse(
             )
         } }
 }
+
+data class UpdateTeamDataBodyDto(
+    @Schema(description = "Memo", example = "연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀연구 1팀")
+    val memo: String,
+)

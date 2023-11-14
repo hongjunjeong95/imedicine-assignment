@@ -1,7 +1,8 @@
 package com.imedicine.imedicine.domain.teamData.api
 
 import com.imedicine.imedicine.domain.team.service.TeamService
-import com.imedicine.imedicine.domain.teamData.api.dto.CreateTeamDataDto
+import com.imedicine.imedicine.domain.teamData.api.dto.CreateTeamDataBodyDto
+import com.imedicine.imedicine.domain.teamData.api.dto.UpdateTeamDataBodyDto
 import com.imedicine.imedicine.domain.teamData.persistent.TeamData
 import com.imedicine.imedicine.domain.teamData.service.TeamDataService
 import com.imedicine.imedicine.domain.user.service.UserService
@@ -16,10 +17,10 @@ class TeamDataFacade(
     private val teamService: TeamService,
     private val userService: UserService
 ) {
-    fun create(user: AuthUser, body: CreateTeamDataDto) {
+    fun createTeamData(user: AuthUser, body: CreateTeamDataBodyDto) {
         val team = teamService.findByIdOrNull(body.teamId)
         val user = userService.findByIdOrNull(user.id)
-        teamDataService.create(
+        teamDataService.save(
             TeamData(
                 memo = body.memo,
                 team = team,
@@ -42,4 +43,11 @@ class TeamDataFacade(
     fun findTeamData(teamDataId: Long): TeamData {
         return teamDataService.findByIdOrNull(teamDataId)
     }
+
+    fun updateTeamData(teamDataId: Long, body: UpdateTeamDataBodyDto?) {
+        checkNotNull(body) { "UpdateTeamDataBodyDto is null" }
+        return teamDataService.findByIdOrNull(teamDataId).let {
+            it.update(body.memo)
+            teamDataService.save(it)
+        } }
 }

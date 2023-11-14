@@ -20,7 +20,7 @@ class MemberFacade(
         val user = userService.findByIdOrNull(userId)
 
         try {
-            memberService.create(
+            memberService.save(
                 Member(
                     team,
                     user

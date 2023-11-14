@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional
 class TeamDataService(
     private val teamDataRepository: TeamDataRepository
 ): CommonService<TeamData>(teamDataRepository) {
-    fun create(param: TeamData) =
-        teamDataRepository.save(param)
-
     fun findByTeamId(teamId: Long) =
         teamDataRepository.findByTeamId(teamId)
 

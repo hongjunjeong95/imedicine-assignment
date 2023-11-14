@@ -8,6 +8,7 @@ import com.imedicine.imedicine.common.persistent.BaseEntity
 import com.imedicine.imedicine.domain.team.persistent.Team
 import com.imedicine.imedicine.domain.user.persistent.User
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "team_data")
@@ -36,5 +37,10 @@ class TeamData(
         private val toStringProperties = arrayOf(
             TeamData::id,
         )
+    }
+
+    fun update(memo: String,){
+        this.memo = memo
+        this.updatedAt = LocalDateTime.now()
     }
 }
