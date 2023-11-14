@@ -66,7 +66,7 @@ class MemberFacadeTest: BehaviorSpec() {
             val userId:Long = 12
             every { teamService.findByIdOrNull(teamId) } returns mockTeam
             every { userService.findByIdOrNull(userId) } returns mockUser
-            every { memberService.create(Member(mockTeam,mockUser)) }.throws(DataIntegrityViolationException("이미 팀원(${userId})이 팀(${teamId})에 추가되었습니다."))
+            every { memberService.save(Member(mockTeam,mockUser)) }.throws(DataIntegrityViolationException("이미 팀원(${userId})이 팀(${teamId})에 추가되었습니다."))
             When("you find yourself(me)") {
                 Then("throws an DataIntegrityViolationException"){
                     shouldThrow<DataIntegrityViolationException> {
