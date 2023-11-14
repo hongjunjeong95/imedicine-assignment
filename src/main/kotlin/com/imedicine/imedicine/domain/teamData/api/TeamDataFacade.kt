@@ -38,4 +38,8 @@ class TeamDataFacade(
             teamDataService.findByTeamIdAndUserId(teamId, userId)
         }
     }
+
+    fun findTeamData(teamDataId: Long): TeamData {
+        return teamDataService.findByIdOrNull(teamDataId)
+    }
 }
