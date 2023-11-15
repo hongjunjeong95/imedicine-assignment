@@ -1,5 +1,6 @@
 package com.imedicine.imedicine.facade
 
+import com.imedicine.imedicine.common.exception.BadRequestException
 import com.imedicine.imedicine.domain.member.api.MemberFacade
 import com.imedicine.imedicine.domain.member.persistent.Member
 import com.imedicine.imedicine.domain.member.service.MemberService
@@ -55,6 +56,19 @@ class MemberFacadeTest: BehaviorSpec() {
             When("you add member to team") {
                 Then("throws an ResponseStatusException"){
                     shouldThrow<ResponseStatusException> {
+                        facade.addMemberToTeam(teamId,userId)
+                    }
+                }
+            }
+        }
+
+        Given("userId which is a leader to add to team"){
+            val teamId:Long = 1
+            val userId:Long = 1
+            every { teamService.findByIdOrNull(teamId) } returns mockTeam
+            When("you add member to team") {
+                Then("throws an BadRequestException"){
+                    shouldThrow<BadRequestException> {
                         facade.addMemberToTeam(teamId,userId)
                     }
                 }

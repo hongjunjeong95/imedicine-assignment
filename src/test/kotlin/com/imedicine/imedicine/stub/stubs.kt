@@ -13,6 +13,7 @@ fun userStub():User {
             password = BCryptUtils.encrypt("12345678"),
         )
     }
+    user.id = 1
     return user
 }
 

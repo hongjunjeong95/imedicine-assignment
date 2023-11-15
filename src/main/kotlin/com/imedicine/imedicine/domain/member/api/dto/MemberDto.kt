@@ -17,4 +17,3 @@ data class RemoveMemberBody(
     @Schema(description = "user id", example = "1")
     val userId: Long,
 )
-
