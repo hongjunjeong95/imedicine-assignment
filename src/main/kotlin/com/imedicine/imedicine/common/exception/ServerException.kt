@@ -24,3 +24,7 @@ data class PasswordNotMatchedException(
 data class InvalidJwtTokenException(
     override val message: String = "잘못된 토큰입니다."
 ) : ServerException(400, message)
+
+data class BadRequestException(
+    override val message: String = "잘못된 요청입니다."
+) : ServerException(400, message)

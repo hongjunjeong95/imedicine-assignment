@@ -24,7 +24,7 @@ class MemberController(private val memberFacade: MemberFacade) {
     ): ApiResponse<Unit> =
         ApiResponse.success(memberFacade.addMemberToTeam(body.teamId, body.userId))
 
-    @Operation(summary = "팀원을 팀에 제외")
+    @Operation(summary = "팀원을 팀에서 제외")
     @DeleteMapping
     @LeaderAuthorize
     fun removeMemberFromTeam(

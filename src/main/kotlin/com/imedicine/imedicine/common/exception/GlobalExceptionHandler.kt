@@ -31,6 +31,13 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(code = 401, message = "Token is not verified"))
     }
 
+    @ExceptionHandler(BadRequestException::class)
+    fun handleBadRequestException(ex: BadRequestException): ResponseEntity<ErrorResponse> {
+        logger.error { ex.message }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(code = 400, message = "잘못된 요청입니다."))
+    }
+
     @ExceptionHandler(JWTDecodeException::class)
     fun handleJWTDecodeException(ex: JWTDecodeException): ResponseEntity<ErrorResponse> {
         logger.error { ex.message }

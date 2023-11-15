@@ -1,5 +1,6 @@
 package com.imedicine.imedicine.domain.member.api
 
+import com.imedicine.imedicine.common.exception.BadRequestException
 import com.imedicine.imedicine.domain.member.persistent.Member
 import com.imedicine.imedicine.domain.member.service.MemberService
 import com.imedicine.imedicine.domain.team.service.TeamService
@@ -17,6 +18,11 @@ class MemberFacade(
     @Transactional
     fun addMemberToTeam(teamId:Long, userId: Long) {
         val team = teamService.findByIdOrNull(teamId)
+
+        if(team.leader.id == userId){
+            throw BadRequestException("팀장을 팀원으로 추가할 수 없습니다.")
+        }
+
         val user = userService.findByIdOrNull(userId)
 
         try {
