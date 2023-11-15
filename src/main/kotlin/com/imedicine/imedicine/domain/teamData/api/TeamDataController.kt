@@ -6,6 +6,7 @@ import com.imedicine.imedicine.domain.teamData.api.dto.TeamDataListResponse
 import com.imedicine.imedicine.domain.teamData.api.dto.TeamDataResponse
 import com.imedicine.imedicine.domain.teamData.api.dto.UpdateTeamDataBodyDto
 import com.imedicine.imedicine.security.AuthUser
+import com.imedicine.imedicine.security.LeaderAndMemberAuthorize
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -21,11 +22,13 @@ import org.springframework.web.bind.annotation.*
 class TeamDataController(private val teamDataFacade: TeamDataFacade) {
     @Operation(summary = "팀 데이터 생성")
     @PostMapping
+    @LeaderAndMemberAuthorize
     fun create(@RequestBody body: CreateTeamDataBodyDto, @AuthenticationPrincipal user: AuthUser): ApiResponse<Unit> =
         ApiResponse.success(teamDataFacade.createTeamData(user, body))
 
     @Operation(summary = "팀 내 팀장 혹은 자신의 데이터 리스트 조회")
     @GetMapping
+    @LeaderAndMemberAuthorize
     fun findMany(
         @AuthenticationPrincipal
         user: AuthUser,
@@ -38,6 +41,7 @@ class TeamDataController(private val teamDataFacade: TeamDataFacade) {
 
     @Operation(summary = "팀 내 팀장 혹은 자신의 데이터 한 개 조회")
     @GetMapping("/{teamDataId}")
+    @LeaderAndMemberAuthorize
     fun findOne(
         @AuthenticationPrincipal
         user: AuthUser,
@@ -50,6 +54,7 @@ class TeamDataController(private val teamDataFacade: TeamDataFacade) {
 
     @Operation(summary = "팀 내 팀장 혹은 자신의 데이터 한 개 수정")
     @PutMapping("/{teamDataId}")
+    @LeaderAndMemberAuthorize
     fun update(
         @PathVariable
         @Schema(description = "team data id", example = "1")
@@ -62,6 +67,7 @@ class TeamDataController(private val teamDataFacade: TeamDataFacade) {
 
     @Operation(summary = "팀 내 팀장 혹은 자신의 데이터 한 개 삭")
     @DeleteMapping("/{teamDataId}")
+    @LeaderAndMemberAuthorize
     fun delete(@PathVariable teamDataId: Long): ResponseEntity<Unit> {
         teamDataFacade.deleteTeamData(teamDataId)
         return noContent().build()

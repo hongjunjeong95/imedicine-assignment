@@ -43,4 +43,8 @@ class Team(
             Team::id,
         )
     }
+
+    fun isUserInTeam(userId: Long): Boolean {
+        return members.any { it.user.id == userId }
+    }
 }

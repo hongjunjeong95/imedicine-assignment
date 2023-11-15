@@ -19,7 +19,14 @@ class CustomPermissionEvaluator(private val teamService: TeamService) : Permissi
         targetType: String,
         permission: Any
     ): Boolean {
+        val userId = (authentication.principal as AuthUser).id
         val team = teamService.findByIdOrNull(targetId as Long)
-        return team.leader.id === (authentication.principal as AuthUser).id
+
+        return when (targetType){
+            "leader" -> team.leader.id == userId
+            "member" -> team.isUserInTeam(userId)
+            else -> false
+        }
     }
+
 }
