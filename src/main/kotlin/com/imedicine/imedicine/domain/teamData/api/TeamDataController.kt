@@ -60,6 +60,7 @@ class TeamDataController(private val teamDataFacade: TeamDataFacade) {
         ApiResponse.success(teamDataFacade.updateTeamData(teamDataId, body))
 
 
+    @Operation(summary = "팀 내 팀장 혹은 자신의 데이터 한 개 삭")
     @DeleteMapping("/{teamDataId}")
     fun delete(@PathVariable teamDataId: Long): ResponseEntity<Unit> {
         teamDataFacade.deleteTeamData(teamDataId)
