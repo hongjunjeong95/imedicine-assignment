@@ -17,9 +17,9 @@ class TeamDataFacade(
     private val teamService: TeamService,
     private val userService: UserService
 ) {
-    fun createTeamData(user: AuthUser, body: CreateTeamDataBodyDto) {
+    fun createTeamData(userId:Long, teamId:Long, body: CreateTeamDataBodyDto) {
         val team = teamService.findByIdOrNull(body.teamId)
-        val user = userService.findByIdOrNull(user.id)
+        val user = userService.findByIdOrNull(userId)
         teamDataService.save(
             TeamData(
                 memo = body.memo,

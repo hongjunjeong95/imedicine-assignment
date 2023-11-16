@@ -5,7 +5,6 @@ import com.imedicine.imedicine.domain.team.api.dto.CreateTeamBodyDto
 import com.imedicine.imedicine.domain.team.persistent.Team
 import com.imedicine.imedicine.domain.team.service.TeamService
 import com.imedicine.imedicine.domain.user.service.UserService
-import com.imedicine.imedicine.security.AuthUser
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +27,9 @@ class TeamFacade(
         )
     }
 
-    fun findTeams(query:PaginationQuery):Page<Team> {
-        return teamService.findMany(query.page,query.size)
-    }
+    fun findTeams(query:PaginationQuery):Page<Team> =
+        teamService.findMany(query.page,query.size)
+
+    fun findTeam(teamId: Long): Team =
+        teamService.findByIdOrNull(teamId)
 }

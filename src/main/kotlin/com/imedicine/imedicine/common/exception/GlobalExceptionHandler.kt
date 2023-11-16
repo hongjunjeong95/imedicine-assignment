@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.server.ResponseStatusException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -73,6 +74,13 @@ class GlobalExceptionHandler {
         ex.fieldErrors.forEach { errors[it.field] = it.defaultMessage!! }
 
         return ResponseEntity.badRequest().body(ErrorResponse(code = 400, message = errors))
+    }
+
+    @ExceptionHandler(ResponseStatusException::class)
+    fun handleInvalidRequestException(ex: ResponseStatusException): ResponseEntity<ErrorResponse> {
+        logger.error { ex.message }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse(code = 404, message = "데이터를 찾지 못 했습니다."))
     }
 
     @ExceptionHandler(Exception::class)

@@ -77,14 +77,37 @@ class TeamFacadeTest: BehaviorSpec() {
             val teams = listOf(mockTeam)
             val teamPageable = PageImpl(teams, pageRequest, teams.size.toLong())
 
-
-
             every { teamService.findMany(page, size) } returns teamPageable
             When("you find teams with pagination") {
                 val result = facade.findTeams(query)
 
                 Then("it returns teamPageable"){
                     result shouldBe teamPageable
+                }
+            }
+        }
+
+        Given("teamId with no team"){
+            val teamId:Long = 1
+
+            every { teamService.findByIdOrNull(teamId) }.throws(ResponseStatusException(HttpStatus.NOT_FOUND))
+            When("you find a team") {
+                Then("throws an ResponseStatusException"){
+                    shouldThrow<ResponseStatusException> {
+                        facade.findTeam(teamId)
+                    }
+                }
+            }
+        }
+
+        Given("teamId"){
+            val teamId:Long = 1
+
+            every { teamService.findByIdOrNull(teamId) } returns mockTeam
+            When("you find a team") {
+                val result = facade.findTeam(teamId)
+                Then("returns a team"){
+                    result shouldBe mockTeam
                 }
             }
         }
