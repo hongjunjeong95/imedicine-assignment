@@ -18,11 +18,12 @@ fun userStub():User {
 }
 
 fun teamStub(): Team {
-    val user: Team  by lazy {
+    val team: Team by lazy {
         Team (
             name = "연구 1팀",
             leader = userStub(),
         )
     }
-    return user
+
+    return team
 }
